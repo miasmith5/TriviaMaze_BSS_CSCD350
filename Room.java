@@ -1,8 +1,9 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Room {
-	
+	private String messageForTesting;
 	private int roomType;
 	private Token token;
 	private Door door;
@@ -52,7 +53,12 @@ public class Room {
 	}
 
 	public void setQ(Question q) {
-		this.q = q;
+		if(q != null)
+			this.q = q;
+		
+		else
+			this.messageForTesting = "Exception Found: Null Question Object In Room Class. Cannot Set Null Object.";
+			System.out.println(this.messageForTesting);
 	}
 
 	public Token getToken() {
@@ -60,7 +66,13 @@ public class Room {
 	}
 
 	public void setToken(Token token) {
-		this.token = token;
+		if(token != null)
+			this.token = token;
+		
+		else
+			this.messageForTesting = "Exception Found: Null Token Object In Room Class. Cannot Set Null Object.";
+			System.out.println(this.messageForTesting);
+		
 	}
 
 	public int getRoomType() {
@@ -68,6 +80,19 @@ public class Room {
 	}
 
 	public void setRoomType(int roomType) {
-		this.roomType = roomType;
+		Pattern pattern = Pattern.compile("\\d");
+		String number = String.valueOf(roomType);
+		
+		if(pattern.matcher(number).matches())
+			this.roomType = roomType;
+		
+		else
+			this.messageForTesting = "Exception Found: Input Type Mismatch In Room Class. Cannot Set RoomType.";
+			System.out.println(this.messageForTesting);
 	}
+	
+	public String getMessageForTesting() {
+		return this.messageForTesting;
+	}
+	
 }

@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class Question {
 	private String question;
@@ -41,7 +42,13 @@ public class Question {
 	}
 
 	public void setQuestion(String question) {
-		this.question = question;
+		Pattern pattern = Pattern.compile(".*");
+		
+		if(pattern.matcher(question).matches())
+			this.question = question;
+		
+		else
+			System.out.println("Exception Found: Input Type Mismatch In Question Class. Cannot Set Question.");
 	}
 
 	public int getAnswer() {
@@ -49,7 +56,14 @@ public class Question {
 	}
 
 	public void setAnswer(int answer) {
-		this.answer = answer;
+		Pattern pattern = Pattern.compile("\\d");
+		String num = String.valueOf(answer);
+		
+		if(pattern.matcher(num).matches())
+			this.answer = answer;
+		
+		else
+			System.out.println("Exception Found: Input Type Mismatch In Question Class. Cannot Set Answer.");
 	}
 
 }
