@@ -1,3 +1,4 @@
+import java.util.regex.Pattern;
 
 public abstract class Token {
 	protected String description;
@@ -7,7 +8,13 @@ public abstract class Token {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		Pattern pattern = Pattern.compile(".*");
+		
+		if(pattern.matcher(description).matches())
+			this.description = description;
+		
+		else
+			System.out.println("Exception Found: Input Type Mismatch In Token Class. Cannot Set Description.");
 	}
 
 	public String toString() {
