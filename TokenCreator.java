@@ -1,4 +1,4 @@
-
+package TriviaMaze_BSS_CSCD350;
 public class TokenCreator {
 
 	public static Token createToken(int n) {

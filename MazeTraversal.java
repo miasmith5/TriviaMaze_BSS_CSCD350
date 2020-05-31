@@ -1,7 +1,8 @@
+package TriviaMaze_BSS_CSCD350;
 import java.util.Scanner;
 import java.util.Random;
 
-public class May52020 {
+public class MazeTraversal {
 	public static void main(String[] args) {		
 		Scanner s = new Scanner(System.in);
 		while(true) {

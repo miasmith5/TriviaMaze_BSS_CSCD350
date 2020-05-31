@@ -1,64 +1,147 @@
+package TriviaMaze_BSS_CSCD350;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Room {
 	private String messageForTesting;
-	private int roomType;
 	private Token token;
-	private Door door;
-	private String question;
-	private Question q;
-	
+	private Question question;
+	private char discoverSymbol;
+	private Object discoverable;
+
+	private char northDoor;
+	private char southDoor;
+	private char eastDoor;
+	private char westDoor;
+
+	private char[][] room;
+
 	public Room() {
-		this.roomType = new Random().nextInt(2);
+		this.room = new char[3][3];
+		this.createWalls();
+		this.setDiscoverable();
+
+		this.northDoor = this.room[0][1];
+		this.southDoor = this.room[2][1];
+		this.eastDoor = this.room[1][2];
+		this.westDoor = this.room[1][0];
+		this.discoverSymbol = this.room[1][1];
 		
-		if(roomType == 0) {
-			q = new Question();
-			this.question = q.generateQuestion(new Random().nextInt(3));
-		}
-		
-		else {
-			this.token = TokenCreator.createToken(new Random().nextInt(2));
-		}
-		
-		this.door = new Door();
+
 	}
-	
-	public void printInfo() { 
-		if(this.roomType == 0) {
-			System.out.println("This room has a question!");
-			System.out.println(question);
-		}
-		
-		else {
-			System.out.println("This room has a token!");
-			System.out.println(this.token.getDescription());
+
+	private void createWalls() {
+		int i, j;
+
+		for (i = 0; i < this.room.length; i++) {
+			for (j = 0; j < this.room[i].length; j++) {
+				this.room[i][j] = '*';
+			}
 		}
 	}
-	
-	
-	public String toString() {
-		if(this.roomType == 0) {
-			return "" + 0;
+
+	public void printRoom() {
+		int i, j;
+
+		for (i = 0; i < this.room.length; i++) {
+			for (j = 0; j < this.room[i].length; j++) {
+				System.out.print(this.room[i][j] + " ");
+			}
+			System.out.println();
 		}
-		
-		else {
-			return "" + 1;
+	}
+
+	public void setNorthDoor() {
+		this.northDoor = '-';
+		this.room[0][1] = this.northDoor;
+	}
+
+	public void setSouthDoor() {
+		this.southDoor = '-';
+		this.room[2][1] = this.southDoor;
+	}
+
+	public void setEastDoor() {
+		this.eastDoor = '|';
+		this.room[1][2] = this.eastDoor;
+	}
+
+	public void setWestDoor() {
+		this.westDoor = '|';
+		this.room[1][0] = this.westDoor;
+	}
+	
+	public boolean hasNorthDoor() {
+		return this.northDoor == '-';
+	}
+	
+	public boolean hasSouthDoor() {
+		return this.southDoor == '-';
+	}
+	
+	public boolean hasEastDoor() {
+		return this.eastDoor == '|';
+	}
+	
+	public boolean hasWestDoor() {
+		return this.westDoor == '|';
+	}
+
+	public Object getDiscoverable() {
+		return this.discoverable;
+	}
+
+	public char getDiscoverSymbol() {
+		return this.discoverSymbol;
+	}
+
+	public void setDiscoverable() {
+		Random randomNumber = new Random();
+		int num = randomNumber.nextInt(8);
+
+		if (num == 0 || num == 1 || num == 2 || num == 3) {
+			this.discoverable = new Question();
+			this.discoverSymbol = 'Q';
+			this.room[1][1] = 'Q';
+			
+		} if (num == 4) {
+			this.discoverable = new AddAChanceToken();
+			this.discoverSymbol = 'A';
+			this.room[1][1] = 'A';
+
+		} if(num == 5) {
+			this.discoverable = new RemoveTwoChoicesToken();
+			this.discoverSymbol = 'R';
+			this.room[1][1] = 'R';
+		} if(num == 6) {
+			this.discoverable = new SkipQuestion();
+			this.discoverSymbol = 'S';
+			this.room[1][1] = 'S';
+		} if(num == 7) {
+			this.discoverable = new ExtraChanceToken();
+			this.discoverSymbol = 'E';
+			this.room[1][1] = 'E';
 		}
 	}
 	
+	public void setDiscoverable(Object discover, char symbol) {
+		this.discoverable = discover;
+		this.discoverSymbol = symbol;
+		this.room[1][1] = ' ';
+	}
+
 	public Question getQ() {
-		return q;
+		return question;
 	}
 
 	public void setQ(Question q) {
-		if(q != null)
-			this.q = q;
-		
+		if (q != null)
+			this.question = q;
+
 		else
 			this.messageForTesting = "Exception Found: Null Question Object In Room Class. Cannot Set Null Object.";
-			System.out.println(this.messageForTesting);
+		System.out.println(this.messageForTesting);
 	}
 
 	public Token getToken() {
@@ -66,33 +149,17 @@ public class Room {
 	}
 
 	public void setToken(Token token) {
-		if(token != null)
+		if (token != null)
 			this.token = token;
-		
+
 		else
 			this.messageForTesting = "Exception Found: Null Token Object In Room Class. Cannot Set Null Object.";
-			System.out.println(this.messageForTesting);
-		
-	}
+		System.out.println(this.messageForTesting);
 
-	public int getRoomType() {
-		return roomType;
-	}
-
-	public void setRoomType(int roomType) {
-		Pattern pattern = Pattern.compile("\\d");
-		String number = String.valueOf(roomType);
-		
-		if(pattern.matcher(number).matches())
-			this.roomType = roomType;
-		
-		else
-			this.messageForTesting = "Exception Found: Input Type Mismatch In Room Class. Cannot Set RoomType.";
-			System.out.println(this.messageForTesting);
 	}
 	
 	public String getMessageForTesting() {
 		return this.messageForTesting;
 	}
-	
+
 }

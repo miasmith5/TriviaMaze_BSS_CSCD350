@@ -1,3 +1,4 @@
+package TriviaMaze_BSS_CSCD350;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -65,5 +66,27 @@ public class Question {
 		else
 			System.out.println("Exception Found: Input Type Mismatch In Question Class. Cannot Set Answer.");
 	}
+	
+	public String toString() {
+		return this.question;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
