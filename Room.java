@@ -98,7 +98,11 @@ public class Room {
 
 	public void setDiscoverable() {
 		Random randomNumber = new Random();
+<<<<<<< HEAD
 		int num = randomNumber.nextInt(8);
+=======
+		int num = randomNumber.nextInt(6);
+>>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
 
 		if (num == 0 || num == 1 || num == 2 || num == 3) {
 			this.discoverable = new Question();
@@ -114,6 +118,7 @@ public class Room {
 			this.discoverable = new RemoveTwoChoicesToken();
 			this.discoverSymbol = 'R';
 			this.room[1][1] = 'R';
+<<<<<<< HEAD
 		} if(num == 6) {
 			this.discoverable = new SkipQuestion();
 			this.discoverSymbol = 'S';
@@ -122,6 +127,8 @@ public class Room {
 			this.discoverable = new ExtraChanceToken();
 			this.discoverSymbol = 'E';
 			this.room[1][1] = 'E';
+=======
+>>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
 		}
 	}
 	

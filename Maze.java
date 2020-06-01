@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 package TriviaMaze_BSS_CSCD350;
 import java.util.ArrayList;
 import java.util.Random;
+=======
+>>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
 import java.util.Scanner;
 
 public class Maze {
@@ -10,9 +13,12 @@ public class Maze {
 	private Room exit;
 	private int currentRowPosition;
 	private int currentColumnPosition;
+<<<<<<< HEAD
 	private int attempts = 3;
 	private ArrayList<String> discoveredTokens = new ArrayList<>();
 	private String usedToken = "";
+=======
+>>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
 
 	public Maze() {
 		this.maze = new Room[7][7];
@@ -82,6 +88,7 @@ public class Maze {
 		Scanner keyboard = new Scanner(System.in);
 		boolean sucess = false;
 		String input = "";
+<<<<<<< HEAD
 		
 		System.out.println("This is room [" + currentRowPosition + "][" + currentColumnPosition + "]");
 		while (!input.equals("w") && !input.equals("d")
@@ -168,6 +175,11 @@ public class Maze {
 				discoveredTokens.add(new ExtraChanceToken().getDescription());
 			}
 			
+=======
+
+		while (!input.equals("w") && !input.equals("d")
+				&& !input.equals("s") && !input.equals("a")) {
+>>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
 
 			System.out.println("Which Direction Do You Want To Travel?");
 			System.out.println("______________________________________");
@@ -197,7 +209,11 @@ public class Maze {
 			this.currentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition];
 			
 		}else {
+<<<<<<< HEAD
 			System.out.println("\nYou cannot travel through a wall.");
+=======
+			System.out.println("\n You cannot travel through a wall.");
+>>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
 			System.out.println(this.currentRoom.hasEastDoor());
 		}
 	}
@@ -216,6 +232,7 @@ public class Maze {
 		}
 
 	}
+<<<<<<< HEAD
 	
 	public void useToken(ArrayList<String> discoveredTokens, Scanner keyboard) {
 			if(discoveredTokens.size() == 0) {
@@ -264,4 +281,7 @@ public class Maze {
 				discoveredTokens.remove("A token for an extra chance");
 			}
 	}
+=======
+
+>>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
 }
