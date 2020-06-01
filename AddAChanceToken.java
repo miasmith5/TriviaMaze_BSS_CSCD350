@@ -2,7 +2,7 @@
 public class AddAChanceToken extends Token{
 	
 	public AddAChanceToken() {
-		this.description = "a chance added!";
+		this.description = "A chance added!";
 	}
 	
 	public String toString() {

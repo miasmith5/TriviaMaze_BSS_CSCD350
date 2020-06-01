@@ -1,8 +1,9 @@
 
 public class RemoveTwoChoicesToken extends Token{
 	public RemoveTwoChoicesToken() {
-		this.description = "a token to remove two choices added!";
+		this.description = "A token to remove two choices";
 	}
+	
 	
 	public String toString() {
 		return this.description;
