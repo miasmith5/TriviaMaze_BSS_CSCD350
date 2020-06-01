@@ -71,6 +71,10 @@ public class Maze {
 	public Room getCurrentRoom() {
 		return this.currentRoom;
 	}
+	
+	public Room[][] getMaze(){
+		return this.maze;
+	}
 
 	public void traverseMaze() {
 		Scanner keyboard = new Scanner(System.in);
@@ -111,8 +115,8 @@ public class Maze {
 			System.out.println("\n You cannot travel through a wall.");
 			System.out.println(this.currentRoom.hasEastDoor());
 		}
-	}
-
+	}// End of traverseMaze() 
+	
 	public void printCurrentRoom() {
 		this.currentRoom.printRoom();
 	}
