@@ -36,7 +36,7 @@ public class SQLiteJDBC {
 			addCorrectAnswers();
 
 			stmt.close();
-			c.close();
+			//c.close();
 
 		} catch (Exception e) {
 
@@ -526,59 +526,44 @@ public class SQLiteJDBC {
 			
 			
 			String query = "select QUESTION from QUESTIONS where ID = " + rand + ";";
-			System.out.println(query);
 			
 			ResultSet resultSet = stmt1.executeQuery(query);
 			
-			System.out.println(resultSet.toString());
 			
-			String question = "";
+			if(resultSet != null) {
+				String question = "";
 			
-			while(resultSet.next()) {
+				while(resultSet.next()) {
 				
-				question = resultSet.getString(1);
-				System.out.println(question + "?");
+					question = resultSet.getString(1);
+					System.out.println(question + "?");
 			
-			}
+				}
 			
-			stmt.close();
-			resultSet.close();
+				stmt1.close();
+				resultSet.close();
 			
 	
-			return rand;
-		} catch (SQLException e) {
-		
-			e.printStackTrace();
-		}
-		
-		return 1;
-		
-	}
-
-	/*protected void printQuestion() {
-		try {
-			String question = "";
-		
-			while(resultSet.next()) {
-				System.out.println("Question: ");
-				question = resultSet.getString(1);
-				System.out.println(question + "?");
-			
+				return rand; // need the random number
 			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		System.out.println("/n");
+			} catch (SQLException e) {
 		
-	}*/
+				e.printStackTrace();
+			}
+			catch(NullPointerException e) {
+				e.printStackTrace();
+			}
+		return 1;
+	}
+	
 
 	protected void getAnswers() { 
 		try {
 			Statement stmt2 = c.createStatement();
+			
 //gets the question number that is returned by the question method
 			int questionID = getQuestion();
+			
 			String query = "select ANSWER from ANSWERS where questionID = " + questionID;		
 			
 			
@@ -594,24 +579,11 @@ public class SQLiteJDBC {
 			
 			e.printStackTrace();
 		}
-		
+		catch(NullPointerException e) {
+			e.printStackTrace();
+		}
 		
 	}
-
-	/*protected void printAnswer() {
-			String answer = null;
-			try {
-				while(resultSet.next()) {
-				
-					answer = resultSet.getString(1);
-				}
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-			
-			System.out.println(answer);
-		}*/
 
 	protected void getCorrect() {
 		
@@ -633,32 +605,9 @@ public class SQLiteJDBC {
 			
 			e.printStackTrace();
 		}
-		
-	}
-
-	/*protected void printCorrect() {
-	
-		String CA = null;
-	
-		try {
-		
-			while(resultSet.next()) {
-			
-			CA = resultSet.getString(1);
-			}
-		} catch (SQLException e) {
-		
-		e.printStackTrace();
+		catch(NullPointerException e) {
+			e.printStackTrace();
 		}
-	
-		System.out.println(CA);
-	}*/
-
-
-
-
-
-
-
+	}
 
 }
