@@ -12,16 +12,9 @@ public class SQLiteJDBC {
 	private  Scanner kb = new Scanner(System.in);	
 //	private  ResultSet resultSet = null;
 	private int rand = (int) (Math.random()*31);
+	private static final SQLiteJDBC sql = new SQLiteJDBC();
 	
-	/*public static void main(String[] args) {
-
-		SQLiteJDBC sql = new SQLiteJDBC();
-		
-		
-		
-	}*/
-
-	public SQLiteJDBC() {
+	private SQLiteJDBC() {
 		String dbName = "";
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -446,7 +439,7 @@ public class SQLiteJDBC {
 	}
 
 	// This method allows the user to add their own questions
-	private void addNewQuestion() {
+	protected void addNewQuestion() {
 		
 		int count= 30; 
 		String question;
@@ -459,18 +452,16 @@ public class SQLiteJDBC {
 			String addNew = "INSERT INTO QUESTIONS(QUESTION, ID)" + "VALES (" + question+ "," + (count + 1) +")";
 			stmt.executeUpdate(addNew);
 			count++;
+			System.out.println("Your question has been added to QUESTIONS");
 		}catch(SQLException e) {
 			
 			System.out.println("Question not added to table.");
 			e.printStackTrace();
 		}
-		
-		System.out.println("Your question has been added to QUESTIONS");
-		
 	}
 	
 	// This method allows for user to add answers for their question
-	private void addNewAnswers(int questionID) {
+	protected void addNewAnswers(int questionID) {
 		int count = 56;
 		String answers;
 		System.out.println("Please note the answers have 3 input parameters and numbers 1 -" + count + " are taken for ANSWERS");
@@ -485,6 +476,7 @@ public class SQLiteJDBC {
 			String addNewA = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "VALUES("+ answers + ", " + questionID + ", " + (count+1) +")";
 			stmt.executeUpdate(addNewA);
 			count++;
+			System.out.println("Answers have been added to table ANSWERS");
 		}catch(SQLException e){
 			
 			System.out.println("Answers not added to table.");
@@ -494,7 +486,7 @@ public class SQLiteJDBC {
 	}
 	
 	// This method allows for user to link the correct answer with the question
-	private void addNewCorrect() {
+	protected void addNewCorrect() {
 		
 		System.out.println("Please note the order of questionID and answerID are in specific order. Enter in values EXACTLY as shown:"
 				+ "CORRECTANSWERS(QuestionID, AnswerID)");
@@ -556,7 +548,6 @@ public class SQLiteJDBC {
 		return 1;
 	}
 	
-
 	protected void getAnswers() { 
 		try {
 			Statement stmt2 = c.createStatement();
@@ -610,4 +601,8 @@ public class SQLiteJDBC {
 		}
 	}
 
+// This method should only allow one database to exist
+	public static SQLiteJDBC getInstance() {
+		return sql;
+	}
 }
