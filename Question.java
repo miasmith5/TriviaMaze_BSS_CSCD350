@@ -1,4 +1,3 @@
-package TriviaMaze_BSS_CSCD350;
 import java.util.Random;
 import java.util.regex.Pattern;
 

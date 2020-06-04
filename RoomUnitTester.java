@@ -1,4 +1,3 @@
-package TriviaMaze_BSS_CSCD350;
 import static org.junit.Assert.*;
 
 import org.junit.Before;

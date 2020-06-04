@@ -1,4 +1,4 @@
-package TriviaMaze_BSS_CSCD350;
+
 public class RecursiveQuiz {
 private int count = 0;
 

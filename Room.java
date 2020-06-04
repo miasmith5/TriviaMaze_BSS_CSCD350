@@ -1,4 +1,3 @@
-package TriviaMaze_BSS_CSCD350;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -98,37 +97,39 @@ public class Room {
 
 	public void setDiscoverable() {
 		Random randomNumber = new Random();
-<<<<<<< HEAD
 		int num = randomNumber.nextInt(8);
-=======
-		int num = randomNumber.nextInt(6);
->>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
 
 		if (num == 0 || num == 1 || num == 2 || num == 3) {
 			this.discoverable = new Question();
 			this.discoverSymbol = 'Q';
 			this.room[1][1] = 'Q';
 			
-		} if (num == 4) {
-			this.discoverable = new AddAChanceToken();
-			this.discoverSymbol = 'A';
-			this.room[1][1] = 'A';
-
-		} if(num == 5) {
-			this.discoverable = new RemoveTwoChoicesToken();
-			this.discoverSymbol = 'R';
-			this.room[1][1] = 'R';
-<<<<<<< HEAD
-		} if(num == 6) {
-			this.discoverable = new SkipQuestion();
-			this.discoverSymbol = 'S';
-			this.room[1][1] = 'S';
-		} if(num == 7) {
-			this.discoverable = new ExtraChanceToken();
-			this.discoverSymbol = 'E';
-			this.room[1][1] = 'E';
-=======
->>>>>>> d973136ef26e831ee1103caca20d63bab85a5d82
+		} else {
+			Token token = TokenCreator.createToken(num);
+			
+			if(token.getDescription().equals("A chance added!")) {
+				this.discoverable = token;
+				this.discoverSymbol = 'A';
+				this.room[1][1] = 'A';
+			}
+			
+			else if(token.getDescription().equals("A token for an extra chance")) {
+				this.discoverable = token;
+				this.discoverSymbol = 'E';
+				this.room[1][1] = 'E';
+			}
+			
+			else if(token.getDescription().equals("A token to remove two choices")) {
+				this.discoverable = token;
+				this.discoverSymbol = 'R';
+				this.room[1][1] = 'R';
+			}
+			
+			else if(token.getDescription().equals("A token to skip a question")) {
+				this.discoverable = token;
+				this.discoverSymbol = 'S';
+				this.room[1][1] = 'S';
+			}
 		}
 	}
 	

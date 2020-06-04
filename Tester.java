@@ -1,4 +1,6 @@
-package TriviaMaze_BSS_CSCD350;
+
+import java.util.Scanner;
+import java.io.File;
 
 public class Tester {
 

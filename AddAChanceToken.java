@@ -1,4 +1,3 @@
-package TriviaMaze_BSS_CSCD350;
 
 public class AddAChanceToken extends Token{
 	
