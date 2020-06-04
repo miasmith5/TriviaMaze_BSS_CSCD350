@@ -10,7 +10,7 @@ public class Maze {
 	private int currentRowPosition;
 	private int currentColumnPosition;
 	private int attempts = 3;
-	private ArrayList<String> discoveredTokens = new ArrayList<>();
+	private ArrayList<String> inventoryOfTokens = new ArrayList<>();
 	private String usedToken = "";
 
 	public Maze() {
@@ -86,86 +86,14 @@ public class Maze {
 		while (!input.equals("w") && !input.equals("d")
 				&& !input.equals("s") && !input.equals("a")) {
 			
-			if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'Q') {
-				boolean asnwered = false;
-				
-				Question q = new Question();
-				q.generateQuestion(new Random().nextInt());
-				System.out.println(q);
-				
-				System.out.println("You have " + attempts + " attempts left, enter 0 use a token");
-				System.out.println(discoveredTokens);
-				System.out.println("Your answer is: ");
-				int answer = keyboard.nextInt();
-				
-				if(answer == 0)
-					useToken(discoveredTokens, keyboard);
-				
-				
-				while(!q.hasBeenAnswered(answer) && !this.usedToken.equals("s")) {
-					this.attempts--;
-					System.out.println("Wrong answer!");
-					System.out.println("You have " + attempts + " attempts left, enter 0 use a token");
-					
-					if(attempts == 0)
-						break;
-					
-					System.out.println("Your answer is: ");
-					answer = keyboard.nextInt();	
-					
-					if(answer == 0) // using a token
-						useToken(discoveredTokens, keyboard);
-				}
-				
+			if(roomHasAQuestion()) {
+				Question q = askQuestion();
+				checkAnswer(keyboard, q);
 				this.usedToken = "";
-				
-				
-				if(attempts == 0 && !q.hasBeenAnswered(answer)) {
-					if(discoveredTokens.contains("A token for an extra chance")) {
-						System.out.println("You are out of attempts, but you have \n" +
-											"an extra chance token, would you like to use it? (y/n)");
-						
-						keyboard.nextLine();
-						String choice = keyboard.nextLine().toLowerCase();
-						
-						if(choice.equals("y")) {
-							this.attempts++;
-							return;
-						}
-						
-						else {
-							System.out.println("You lost!");
-							System.exit(0);
-						}
-					}
-					
-					else {
-						System.out.println("You lost!");
-						System.exit(0);
-					}
-				}	
-				
 			}
 			
-			if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'R') {
-				System.out.println(((Token) this.maze[currentRowPosition][currentColumnPosition].getDiscoverable()).getDescription() + " added!");
-				discoveredTokens.add(new RemoveTwoChoicesToken().getDescription());
-			}
-			
-			if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'S') {
-				System.out.println(((Token) this.maze[currentRowPosition][currentColumnPosition].getDiscoverable()).getDescription() + " added!");
-				discoveredTokens.add(new SkipQuestion().getDescription());
-			}
-			
-			if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'A') {
-				System.out.println(((Token) this.maze[currentRowPosition][currentColumnPosition].getDiscoverable()).getDescription());
-				this.attempts++;
-			}
-			
-			if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'E') {
-				System.out.println(((Token) this.maze[currentRowPosition][currentColumnPosition].getDiscoverable()).getDescription() + " added!");
-				discoveredTokens.add(new ExtraChanceToken().getDescription());
-			}
+			else if(roomHasAToken())
+				addTokenToInventory();
 			
 
 			System.out.println("Which Direction Do You Want To Travel?");
@@ -216,8 +144,8 @@ public class Maze {
 
 	}
 	
-	public void useToken(ArrayList<String> discoveredTokens, Scanner keyboard) {
-			if(discoveredTokens.size() == 0) {
+	public void useToken(ArrayList<String> inventoryOfTokens, Scanner keyboard) {
+			if(inventoryOfTokens.size() == 0) {
 				System.out.println("You have no tokens to use!");
 				return;
 			}
@@ -225,17 +153,17 @@ public class Maze {
 			else {
 				System.out.println("Enter the symbol of the token to use it: ");
 				
-				for(int i = 0 ; i < discoveredTokens.size(); i ++) {
-					if(discoveredTokens.get(i).equals("A token to skip a question")) {
-						System.out.print(discoveredTokens.get(i) + " (S)\n");
+				for(int i = 0 ; i < inventoryOfTokens.size(); i ++) {
+					if(inventoryOfTokens.get(i).equals("A token to skip a question")) {
+						System.out.print(inventoryOfTokens.get(i) + " (S)\n");
 					}
 					
-					else if(discoveredTokens.get(i).equals("A token to remove two choices")){
-						System.out.print(discoveredTokens.get(i) + " (R)\n");
+					else if(inventoryOfTokens.get(i).equals("A token to remove two choices")){
+						System.out.print(inventoryOfTokens.get(i) + " (R)\n");
 					}
 					
-					else if(discoveredTokens.get(i).equals("A token for an extra chance")) {
-						System.out.print(discoveredTokens.get(i) + " (E)\n");
+					else if(inventoryOfTokens.get(i).equals("A token for an extra chance")) {
+						System.out.print(inventoryOfTokens.get(i) + " (E)\n");
 					}
 					
 				}		
@@ -248,19 +176,109 @@ public class Maze {
 			
 			if(this.usedToken.equals("s")) {
 				System.out.println("You used a token to skip a question!");
-				discoveredTokens.remove("A token to skip a question");
+				inventoryOfTokens.remove("A token to skip a question");
 			}
 			
 			
 			else if(this.usedToken.equals("r")) {
 				System.out.println("You used a token to remove two choices!");
-				discoveredTokens.remove("A token to remove two choices");
+				inventoryOfTokens.remove("A token to remove two choices");
 			}
 				
 			else if(this.usedToken.equals("e")) {
 				System.out.println("You used a token for an extra chance!");
 				this.attempts++;
-				discoveredTokens.remove("A token for an extra chance");
+				inventoryOfTokens.remove("A token for an extra chance");
 			}
+	}
+	
+	public boolean roomHasAQuestion() {
+		if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'Q') 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean roomHasAToken() {
+		if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'R')
+			return true;
+		else if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'S')
+			return true;
+		else if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'A')
+			return true;
+		else if (this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'E')
+			return true;
+		
+		else return false;
+	}
+	
+	public Question askQuestion() {
+		Question q = new Question();
+		q.generateQuestion(new Random().nextInt());
+		System.out.println(q);
+		
+		return q;
+	}
+	
+	
+	public void checkAnswer(Scanner keyboard, Question q) {
+		boolean asnwered = false;
+		
+		System.out.println("You have " + attempts + " attempts left, enter 0 use a token");
+		System.out.println(inventoryOfTokens);
+		System.out.println("Your answer is: ");
+		int answer = keyboard.nextInt();
+		
+		if(answer == 0)
+			useToken(inventoryOfTokens, keyboard);
+		
+		
+		while(!q.hasBeenAnswered(answer) && !this.usedToken.equals("s")) {
+			this.attempts--;
+			System.out.println("Wrong answer!");
+			System.out.println("You have " + attempts + " attempts left, enter 0 use a token");
+			
+			if(attempts == 0)
+				break;
+			
+			System.out.println("Your answer is: ");
+			answer = keyboard.nextInt();	
+			
+			if(answer == 0) // using a token
+				useToken(inventoryOfTokens, keyboard);
+		}
+		
+		if(attempts == 0 && !q.hasBeenAnswered(answer)) {
+			if(inventoryOfTokens.contains("A token for an extra chance")) {
+				System.out.println("You are out of attempts, but you have \n" +
+									"an extra chance token, would you like to use it? (y/n)");
+				
+				keyboard.nextLine();
+				String choice = keyboard.nextLine().toLowerCase();
+				
+				if(choice.equals("y")) {
+					this.attempts++;
+					inventoryOfTokens.remove("A token for an extra chance");
+					return;
+				}
+				
+				else {
+					System.out.println("You lost!");
+					System.exit(0);
+				}
+			}
+			
+			else {
+				System.out.println("You lost!");
+				System.exit(0);
+			}
+		}	
+	}
+	
+	public void addTokenToInventory() {
+		if(roomHasAToken()) {
+			System.out.println(((Token) this.maze[currentRowPosition][currentColumnPosition].getDiscoverable()).getDescription() + " added!");
+			inventoryOfTokens.add(((Token) this.maze[currentRowPosition][currentColumnPosition].getDiscoverable()).getDescription());
+		}
 	}
 }

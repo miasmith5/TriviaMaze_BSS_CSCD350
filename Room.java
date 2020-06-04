@@ -104,23 +104,32 @@ public class Room {
 			this.discoverSymbol = 'Q';
 			this.room[1][1] = 'Q';
 			
-		} if (num == 4) {
-			this.discoverable = new AddAChanceToken();
-			this.discoverSymbol = 'A';
-			this.room[1][1] = 'A';
-
-		} if(num == 5) {
-			this.discoverable = new RemoveTwoChoicesToken();
-			this.discoverSymbol = 'R';
-			this.room[1][1] = 'R';
-		} if(num == 6) {
-			this.discoverable = new SkipQuestion();
-			this.discoverSymbol = 'S';
-			this.room[1][1] = 'S';
-		} if(num == 7) {
-			this.discoverable = new ExtraChanceToken();
-			this.discoverSymbol = 'E';
-			this.room[1][1] = 'E';
+		} else {
+			Token token = TokenCreator.createToken(num);
+			
+			if(token.getDescription().equals("A chance added!")) {
+				this.discoverable = token;
+				this.discoverSymbol = 'A';
+				this.room[1][1] = 'A';
+			}
+			
+			else if(token.getDescription().equals("A token for an extra chance")) {
+				this.discoverable = token;
+				this.discoverSymbol = 'E';
+				this.room[1][1] = 'E';
+			}
+			
+			else if(token.getDescription().equals("A token to remove two choices")) {
+				this.discoverable = token;
+				this.discoverSymbol = 'R';
+				this.room[1][1] = 'R';
+			}
+			
+			else if(token.getDescription().equals("A token to skip a question")) {
+				this.discoverable = token;
+				this.discoverSymbol = 'S';
+				this.room[1][1] = 'S';
+			}
 		}
 	}
 	
