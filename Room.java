@@ -97,7 +97,7 @@ public class Room {
 
 	public void setDiscoverable() {
 		Random randomNumber = new Random();
-		int num = randomNumber.nextInt(8);
+		int num = randomNumber.nextInt(7);
 
 		if (num == 0 || num == 1 || num == 2 || num == 3) {
 			this.discoverable = new Question();
@@ -107,7 +107,7 @@ public class Room {
 		} else {
 			Token token = TokenCreator.createToken(num);
 			
-			if(token.getDescription().equals("A chance added!")) {
+			if(token.getDescription().equals("A chance")) {
 				this.discoverable = token;
 				this.discoverSymbol = 'A';
 				this.room[1][1] = 'A';
@@ -117,12 +117,6 @@ public class Room {
 				this.discoverable = token;
 				this.discoverSymbol = 'E';
 				this.room[1][1] = 'E';
-			}
-			
-			else if(token.getDescription().equals("A token to remove two choices")) {
-				this.discoverable = token;
-				this.discoverSymbol = 'R';
-				this.room[1][1] = 'R';
 			}
 			
 			else if(token.getDescription().equals("A token to skip a question")) {

@@ -158,14 +158,10 @@ public class Maze {
 						System.out.print(inventoryOfTokens.get(i) + " (S)\n");
 					}
 					
-					else if(inventoryOfTokens.get(i).equals("A token to remove two choices")){
-						System.out.print(inventoryOfTokens.get(i) + " (R)\n");
-					}
 					
 					else if(inventoryOfTokens.get(i).equals("A token for an extra chance")) {
-						System.out.print(inventoryOfTokens.get(i) + " (E)\n");
+						System.out.print(inventoryOfTokens.get(i) + " (E) - Can only be used when you are out of attempts\n");
 					}
-					
 				}		
 				
 			}
@@ -177,12 +173,6 @@ public class Maze {
 			if(this.usedToken.equals("s")) {
 				System.out.println("You used a token to skip a question!");
 				inventoryOfTokens.remove("A token to skip a question");
-			}
-			
-			
-			else if(this.usedToken.equals("r")) {
-				System.out.println("You used a token to remove two choices!");
-				inventoryOfTokens.remove("A token to remove two choices");
 			}
 				
 			else if(this.usedToken.equals("e")) {
@@ -200,9 +190,7 @@ public class Maze {
 	}
 	
 	public boolean roomHasAToken() {
-		if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'R')
-			return true;
-		else if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'S')
+		if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'S')
 			return true;
 		else if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'A')
 			return true;

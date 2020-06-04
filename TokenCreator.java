@@ -6,12 +6,9 @@ public class TokenCreator {
 			return new AddAChanceToken();
 		
 		else if(n == 5)
-			return new RemoveTwoChoicesToken();
-		
-		else if(n == 6)
 			return new ExtraChanceToken();
 		
-		else if(n == 7)
+		else if(n == 6)
 			return new SkipQuestion();
 		
 		return null;
