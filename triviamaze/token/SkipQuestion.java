@@ -1,3 +1,4 @@
+package triviamaze.token;
 
 public class SkipQuestion extends Token{
 	public SkipQuestion() {

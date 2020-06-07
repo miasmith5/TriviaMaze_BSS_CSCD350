@@ -1,3 +1,6 @@
+package triviamaze.game;
+
+import triviamaze.maze.Maze;
 
 public class TriviaMazeGame {
 

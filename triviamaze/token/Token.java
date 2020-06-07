@@ -1,3 +1,4 @@
+package triviamaze.token;
 import java.util.regex.Pattern;
 
 public abstract class Token {

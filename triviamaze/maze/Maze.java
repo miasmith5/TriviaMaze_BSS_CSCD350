@@ -1,6 +1,10 @@
+package triviamaze.maze;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+
+import triviamaze.room.Room;
+import triviamaze.token.Token;
 
 public class Maze {
 	private Room[][] maze;
@@ -77,9 +81,11 @@ public class Maze {
 		return this.currentRoom;
 	}
 
+	//TODO
+	//
 	public void traverseMaze() {
 		Scanner keyboard = new Scanner(System.in);
-		boolean sucess = false;
+		boolean success = false;
 		String input = "";
 		
 		System.out.println("This is room [" + currentRowPosition + "][" + currentColumnPosition + "]");

@@ -1,11 +1,13 @@
+package triviamaze.room;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import triviamaze.token.Token;
+import triviamaze.token.TokenCreator;
 
 public class Room {
 	private String messageForTesting;
 	private Token token;
-	private Question question;
 	private char discoverSymbol;
 	private Object discoverable;
 
