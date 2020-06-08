@@ -1,6 +1,9 @@
+package triviamaze.maze;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import triviamaze.room.Room;
 
 public class MazeUnitTester {
 	private Maze maze = new Maze();

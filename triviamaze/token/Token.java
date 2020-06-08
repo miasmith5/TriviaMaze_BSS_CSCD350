@@ -1,6 +1,8 @@
+package triviamaze.token;
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-public abstract class Token {
+public abstract class Token implements Serializable{
 	protected String description;
 	
 	public String getDescription() {

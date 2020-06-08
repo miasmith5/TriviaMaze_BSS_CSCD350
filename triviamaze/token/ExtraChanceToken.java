@@ -1,3 +1,4 @@
+package triviamaze.token;
 
 public class ExtraChanceToken extends Token{
 	public ExtraChanceToken() {

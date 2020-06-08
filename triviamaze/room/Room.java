@@ -1,11 +1,14 @@
+package triviamaze.room;
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import triviamaze.token.Token;
+import triviamaze.token.TokenCreator;
 
-public class Room {
+public class Room implements Serializable{
 	private String messageForTesting;
 	private Token token;
-	private Question question;
 	private char discoverSymbol;
 	private Object discoverable;
 
@@ -100,7 +103,6 @@ public class Room {
 		int num = randomNumber.nextInt(7);
 
 		if (num == 0 || num == 1 || num == 2 || num == 3) {
-			this.discoverable = new Question();
 			this.discoverSymbol = 'Q';
 			this.room[1][1] = 'Q';
 			
@@ -131,19 +133,6 @@ public class Room {
 		this.discoverable = discover;
 		this.discoverSymbol = symbol;
 		this.room[1][1] = ' ';
-	}
-
-	public Question getQ() {
-		return question;
-	}
-
-	public void setQ(Question q) {
-		if (q != null)
-			this.question = q;
-
-		else
-			this.messageForTesting = "Exception Found: Null Question Object In Room Class. Cannot Set Null Object.";
-		System.out.println(this.messageForTesting);
 	}
 
 	public Token getToken() {

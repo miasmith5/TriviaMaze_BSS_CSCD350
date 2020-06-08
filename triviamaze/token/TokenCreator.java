@@ -1,5 +1,8 @@
+package triviamaze.token;
 
-public class TokenCreator {
+import java.io.Serializable;
+
+public class TokenCreator implements Serializable{
 
 	public static Token createToken(int n) {
 		if(n == 4)
