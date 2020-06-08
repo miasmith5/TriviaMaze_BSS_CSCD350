@@ -1,13 +1,18 @@
-package triviamaze.game;
+import java.sql.SQLException;
+import java.util.Scanner;
 
+import SaveState.ResourceManager;
+import SaveState.SaveData;
 import triviamaze.maze.Maze;
 
 public class TriviaMazeGame {
 
+	private static Scanner kb = new Scanner(System.in);
+	
 	public static void main(String[] args) {
 
 		Maze maze = new Maze();
-
+		SQLiteJDBC sql = SQLiteJDBC.getInstance();
 		SaveData sData = new SaveData();
 		sData.setMaze(maze);
 		sData.setColumnPosition(1);
@@ -27,8 +32,16 @@ public class TriviaMazeGame {
 			int col = lData.getColumnPosition();
 
 		} catch (Exception e) {
-			System.out.println("Could'nt load saved data: " + e.getMessage());
+			System.out.println("Couldn't load saved data: " + e.getMessage());
 		}
+		
+		//Create the database and add everything once. If questions are added again then the table will have duplicates
+		//Put in Load Try Catch
+			sql.createTables();
+			sql.addQuestions();
+			sql.addAnswers();
+			sql.addCorrectAnswers();
+		
 		
 		//Start of TriviaMazeGame
 		
@@ -41,5 +54,36 @@ public class TriviaMazeGame {
 		System.out.println("5) Enter 'S' to save your current game");
 		System.out.println("6) Enter 'L' to load a previous game");
 		System.out.println("7) Enter 0 to quit");
+		
+		do {
+			// this is the game loop inside there will be method calls for everything
+			Object correctAnswer = sql.getCorrect();
+		}while(kb.nextLine() != "0");
+		
+	}// end main
+	
+	// this records the player choice 
+	private static Object playerChoice() {
+		
+		Scanner inAnswer = new Scanner(System.in);
+		Object playerAnswer = inAnswer.nextLine();
+		
+		return playerAnswer;
+		
 	}
+	
+	private static boolean compareAnswers(Object playerAnswer, Object correctAnswer) {
+		boolean correct;
+		
+		if(playerAnswer.equals(correctAnswer)){
+			correct = true;
+		}
+		else {
+			correct = false;
+		}
+		return correct;
+		
+	}
+	
 }
+

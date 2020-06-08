@@ -1,4 +1,5 @@
 package triviamaze.maze;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -6,7 +7,7 @@ import java.util.Scanner;
 import triviamaze.room.Room;
 import triviamaze.token.Token;
 
-public class Maze {
+public class Maze implements Serializable{
 	private Room[][] maze;
 	private Room currentRoom;
 	private Room entrance;
@@ -80,28 +81,20 @@ public class Maze {
 	public Room getCurrentRoom() {
 		return this.currentRoom;
 	}
+	
+	public Room[][] getMaze() {
+		return this.maze;
+	}
 
 	//TODO
-	//
+	//Split this method into two
 	public void traverseMaze() {
 		Scanner keyboard = new Scanner(System.in);
-		boolean success = false;
 		String input = "";
 		
-		System.out.println("This is room [" + currentRowPosition + "][" + currentColumnPosition + "]");
 		while (!input.equals("w") && !input.equals("d")
 				&& !input.equals("s") && !input.equals("a")) {
 			
-			if(roomHasAQuestion()) {
-				Question q = askQuestion();
-				checkAnswer(keyboard, q);
-				this.usedToken = "";
-			}
-			
-			else if(roomHasAToken())
-				addTokenToInventory();
-			
-
 			System.out.println("Which Direction Do You Want To Travel?");
 			System.out.println("______________________________________");
 			System.out.println("W. North Door");
@@ -133,6 +126,8 @@ public class Maze {
 			System.out.println("\nYou cannot travel through a wall.");
 			System.out.println(this.currentRoom.hasEastDoor());
 		}
+		
+		keyboard.close();
 	}
 
 	public void printCurrentRoom() {
@@ -206,68 +201,6 @@ public class Maze {
 		else return false;
 	}
 	
-	public Question askQuestion() {
-		Question q = new Question();
-		q.generateQuestion(new Random().nextInt());
-		System.out.println(q);
-		
-		return q;
-	}
-	
-	
-	public void checkAnswer(Scanner keyboard, Question q) {
-		boolean asnwered = false;
-		
-		System.out.println("You have " + attempts + " attempts left, enter 0 use a token");
-		System.out.println(inventoryOfTokens);
-		System.out.println("Your answer is: ");
-		int answer = keyboard.nextInt();
-		
-		if(answer == 0)
-			useToken(inventoryOfTokens, keyboard);
-		
-		
-		while(!q.hasBeenAnswered(answer) && !this.usedToken.equals("s")) {
-			this.attempts--;
-			System.out.println("Wrong answer!");
-			System.out.println("You have " + attempts + " attempts left, enter 0 use a token");
-			
-			if(attempts == 0)
-				break;
-			
-			System.out.println("Your answer is: ");
-			answer = keyboard.nextInt();	
-			
-			if(answer == 0) // using a token
-				useToken(inventoryOfTokens, keyboard);
-		}
-		
-		if(attempts == 0 && !q.hasBeenAnswered(answer)) {
-			if(inventoryOfTokens.contains("A token for an extra chance")) {
-				System.out.println("You are out of attempts, but you have \n" +
-									"an extra chance token, would you like to use it? (y/n)");
-				
-				keyboard.nextLine();
-				String choice = keyboard.nextLine().toLowerCase();
-				
-				if(choice.equals("y")) {
-					this.attempts++;
-					inventoryOfTokens.remove("A token for an extra chance");
-					return;
-				}
-				
-				else {
-					System.out.println("You lost!");
-					System.exit(0);
-				}
-			}
-			
-			else {
-				System.out.println("You lost!");
-				System.exit(0);
-			}
-		}	
-	}
 	
 	public void addTokenToInventory() {
 		if(roomHasAToken()) {
