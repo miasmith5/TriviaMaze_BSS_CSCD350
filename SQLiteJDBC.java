@@ -140,7 +140,7 @@ public class SQLiteJDBC {
 			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('How many bits in a byte', 26, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False Venus is the hottest planet in our solar system', 27, 'TA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False Venus is the hottest planet in our solar system', 27, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
 			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('The scientific term for \"brain freeze\"', 28, 'MC')";
@@ -567,9 +567,10 @@ public class SQLiteJDBC {
 				
 					question = resultSet.getString(1);
 					type = resultSet.getString(2);
+					
 					System.out.println(question + "?");
 					System.out.println(type);
-			
+					getAnswers(type);
 				}
 			
 				stmt1.close();
@@ -585,24 +586,35 @@ public class SQLiteJDBC {
 			}
 	}
 	
-	protected void getAnswers() { 
+	protected void getAnswers(String type) { 
 		try {
 			Statement stmt2 = conn.createStatement();
 			
 //gets the question number that is returned by the question method
 			int questionID = rand;
-			
+			//String type = 
 			String query = "select ANSWER from ANSWERS where questionID = " + questionID;		
 			
 			
 			ResultSet resultSet = stmt2.executeQuery(query);
-			while(resultSet.next()) {
+			do {
 				
 				String answer = resultSet.getString(1);
-				System.out.println(answer);
-			}
+				
+				if(type.equals("MC")) {
+					System.out.println(answer);
+				}
+				else if(type.equals("TF")) {
+					System.out.println(answer);
+				}
+				else {
+					System.out.println(" ");
+				}
+			}while(resultSet.next());
+			
 		stmt2.close();
 		resultSet.close();
+		
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
