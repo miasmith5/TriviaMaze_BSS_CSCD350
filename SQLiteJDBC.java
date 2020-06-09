@@ -1,3 +1,5 @@
+package t;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,10 +25,10 @@ public class SQLiteJDBC {
 			
 			stmt = conn.createStatement();
 
-			createTables();
-			addQuestions();
-			addAnswers();
-			addCorrectAnswers();
+			//createTables();
+			//addQuestions();
+			//addAnswers();
+			//addCorrectAnswers();
 
 			stmt.close();
 			//c.close();
@@ -40,9 +42,9 @@ public class SQLiteJDBC {
 		System.out.println("Table created successfully");
 	}
 	// This method will create the tables
-	private void createTables() {
+	protected void createTables() {
 		try {
-			String sql = "CREATE TABLE IF NOT EXISTS QUESTIONS " + "(QUESTION varchar(400) NOT NULL, " + "ID int, " + "QTYPE varchar(2))";
+			String sql = "CREATE TABLE IF NOT EXISTS QUESTIONS " + "(QUESTION varchar(400) NOT NULL, " + "ID int, " + "TYPE varchar(50))";
 			String sql2 = "CREATE TABLE IF NOT EXISTS ANSWERS(" + "ANSWER varchar(100), " + "questionID int, answerID int)";
 			String sql3 = "CREATE TABLE IF NOT EXISTS CORRECTANSWER(" + "QuestionID int, " + "AnswerID int)";
 
@@ -57,97 +59,97 @@ public class SQLiteJDBC {
 	}
 
 	// This method will add the questions into the correct table
-	private void addQuestions() {
+	protected void addQuestions() {
 		try {
 
-			String sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False hummingbirds cannot walk', 1 , 'TF')";
+			String sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False hummingbirds cannot walk', 1 , 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the most known moon that orbits Saturn', 2, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What is the most known moon that orbits Saturn', 2, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Who is considered the first computer programmer', 3, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('Who is considered the first computer programmer', 3, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the largest known living organism', 4, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What is the largest known living organism', 4, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False Coca Cola was the first soft drink in space', 5, 'TF')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False Coca Cola was the first soft drink in space', 5, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the measurement of speed in a computer mouse called', 6, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What is the measurement of speed in a computer mouse called', 6, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the meaning to life', 7, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What is the meaning to life', 7, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('How many second until one must throw the holy hand grenade', 8, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('How many second until one must throw the holy hand grenade', 8, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the common phrase associated with May 4th', 9, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What is the common phrase associated with May 4th', 9, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What are the 4 pillars of OO', 10, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What are the 4 pillars of OO', 10, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What word refers to the right hand but will only ever be typed with the left', 11, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What word refers to the right hand but will only ever be typed with the left', 11, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False There are 11 planets in our solar system', 12, 'TF')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False There are 11 planets in our solar system', 12, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the fear of the number 13', 13, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What is the fear of the number 13', 13, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False The children of identical twins are genetically siblings, not cousins', 14, 'TF')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False The children of identical twins are genetically siblings, not cousins', 14, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the offical bird of Redondo Beach, California', 15, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What is the offical bird of Redondo Beach, California', 15, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What year was the War of 1812', 16, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What year was the War of 1812', 16, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Who was King Henry VIIIs second wife', 17, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('Who was King Henry VIIIs second wife', 17, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What can be blamed for most power outages in the US', 18, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What can be blamed for most power outages in the US', 18, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Who owns all the swans in England', 19, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('Who owns all the swans in England', 19, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False You can only see a rainbow during the day', 20, 'TF')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False You can only see a rainbow during the day', 20, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('How much money were the rights for The Terminator sold for', 21, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('How much money were the rights for The Terminator sold for', 21, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Which Jamaican runner is an 11 time world champion and hold the record in the 100 and 200 meter race', 22, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('Which Jamaican runner is an 11 time world champion and hold the record in the 100 and 200 meter race', 22, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Which hockey team did Wayne Gretzky play for in the 80s', 23, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('Which hockey team did Wayne Gretzky play for in the 80s', 23, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False HTTP stands for Hippo TRex Triangle and Penguin', 24, 'TF')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False HTTP stands for Hippo TRex Triangle and Penguin', 24, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is seen as the smallest unit of memory', 25, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What is seen as the smallest unit of memory', 25, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('How many bits in a byte', 26, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('How many bits in a byte', 26, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False Venus is the hottest planet in our solar system', 27, 'TA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or False Venus is the hottest planet in our solar system', 27, 'TA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('The scientific term for \"brain freeze\"', 28, 'MC')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('The scientific term for \"brain freeze\"', 28, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What letter does NOT make an appearance on the periodic table', 29, 'UA')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('What letter does NOT make an appearance on the periodic table', 29, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or Fasle a single strand of Spaghetti is called Spaghetto', 30, 'TF')";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, TYPE)" + "VALUES " + "('True or Fasle a single strand of Spaghetti is called Spaghetto', 30, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 			
 		} catch (SQLException e) {
@@ -158,7 +160,7 @@ public class SQLiteJDBC {
 	} // end addQuestions
 
 	// This method will add ALL the available answers into the correct table
-	private void addAnswers() {
+	protected void addAnswers() {
 		try {
 
 			String sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 1, 1)";
@@ -361,7 +363,7 @@ public class SQLiteJDBC {
 	}
 
 	// This method will link the correct answer with the corresponding question
-	private void addCorrectAnswers() {
+	protected void addCorrectAnswers() {
 		try {
 
 			String sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + "Values (1, 1)";
@@ -464,20 +466,27 @@ public class SQLiteJDBC {
 	protected void addNewQuestion() {
 		
 		int count= 30; 
-		String question;
+		String question, type;
 		System.out.println("Please note that the numbers 1-"+ count + " are taken for table QUESTIONS");
 		System.out.println("Enter the new question: ");
 		question = kb.nextLine();
-		System.out.println("Enter the question type: ");
-		System.out.println("Multiple Choice: MC | User Answer: UA | True or False: TF");
-		String qtype = kb.nextLine();
 		
+		System.out.println("Multiple choice: MC | User Answer: UA | True or False: TF");
+		System.out.println("Enter the question type: ");
+		
+		
+		
+		type = kb.nextLine();
 		try {
 			
-			String addNew = "INSERT INTO QUESTIONS(QUESTION, ID, QTYPE)" + "VALES (" + question+ "," + (count + 1) + qtype + ")";
+			String addNew = "INSERT INTO QUESTIONS(QUESTION, ID, TYPE)" + "VALES (" + question+ "," + (count + 1) + ", " + type +")";
 			stmt.executeUpdate(addNew);
 			count++;
 			System.out.println("Your question has been added to QUESTIONS");
+			
+			System.out.println("Time to add the answers. Make sure the question numbers match for multiple choice answers!");
+			addNewAnswers();
+			
 		}catch(SQLException e) {
 			
 			System.out.println("Question not added to table.");
@@ -487,9 +496,9 @@ public class SQLiteJDBC {
 	
 	// This method allows for user to add answers for their question
 	protected void addNewAnswers() {
-		int count = 63;
+		int count = 56;
 		String answers;
-		System.out.println("Please note the answers have 3 input parameters and numbers 1 -" + count + " are taken for ANSWERS");
+		System.out.println("Please note the answers have 3 input parameters(answer, questionID, answerID) and numbers 1 -" + count + " are taken for ANSWERS");
 		
 		System.out.println("Enter the question number: ");
 		int questionID = kb.nextInt();
@@ -502,6 +511,10 @@ public class SQLiteJDBC {
 			stmt.executeUpdate(addNewA);
 			count++;
 			System.out.println("Answers have been added to table ANSWERS");
+			
+			System.out.println("Now time to link the question with the correct answer.");
+			addNewCorrect();
+			
 		}catch(SQLException e){
 			
 			System.out.println("Answers not added to table.");
@@ -562,8 +575,6 @@ public class SQLiteJDBC {
 				stmt1.close();
 				resultSet.close();
 			
-	
-			//	return rand; // need the random number
 			}
 			} catch (SQLException e) {
 		
@@ -572,7 +583,6 @@ public class SQLiteJDBC {
 			catch(NullPointerException e) {
 				e.printStackTrace();
 			}
-	//	return 1;
 	}
 	
 	protected void getAnswers() { 

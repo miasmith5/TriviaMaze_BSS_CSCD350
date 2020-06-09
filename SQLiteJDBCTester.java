@@ -1,3 +1,5 @@
+package t;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +10,10 @@ public class SQLiteJDBCTester {
 	public static void main(String[] args) throws SQLException, IOException {
 		
 		SQLiteJDBC sql = SQLiteJDBC.getInstance();
+		//sql.createTables();
+	//	sql.addQuestions();
+	//	sql.addAnswers();
+		//sql.addCorrectAnswers();
 
 		System.out.println("question: ");
 
