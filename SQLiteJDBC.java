@@ -6,11 +6,11 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class SQLiteJDBC {
-	private  Connection c = null;
+	private  Connection conn = null;
 	private  Statement stmt = null;
-//	private  ResultSet rs = null;
+
 	private  Scanner kb = new Scanner(System.in);	
-//	private  ResultSet resultSet = null;
+
 	private int rand = (int) (Math.random()*31);
 	private static final SQLiteJDBC sql = new SQLiteJDBC();
 	
@@ -18,10 +18,10 @@ public class SQLiteJDBC {
 		String dbName = "";
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:maze.db");
+			conn = DriverManager.getConnection("jdbc:sqlite:maze.db");
 			
 			
-			stmt = c.createStatement();
+			stmt = conn.createStatement();
 
 			createTables();
 			addQuestions();
@@ -42,7 +42,7 @@ public class SQLiteJDBC {
 	// This method will create the tables
 	private void createTables() {
 		try {
-			String sql = "CREATE TABLE IF NOT EXISTS QUESTIONS " + "(QUESTION varchar(400) NOT NULL, " + "ID int)";
+			String sql = "CREATE TABLE IF NOT EXISTS QUESTIONS " + "(QUESTION varchar(400) NOT NULL, " + "ID int, " + "QTYPE varchar(2))";
 			String sql2 = "CREATE TABLE IF NOT EXISTS ANSWERS(" + "ANSWER varchar(100), " + "questionID int, answerID int)";
 			String sql3 = "CREATE TABLE IF NOT EXISTS CORRECTANSWER(" + "QuestionID int, " + "AnswerID int)";
 
@@ -60,94 +60,94 @@ public class SQLiteJDBC {
 	private void addQuestions() {
 		try {
 
-			String sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('True or False hummingbirds cannot walk', 1)";
+			String sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False hummingbirds cannot walk', 1 , 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What is the most known moon that orbits Saturn', 2)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the most known moon that orbits Saturn', 2, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('Who is considered the first computer programmer', 3)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Who is considered the first computer programmer', 3, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What is the largest known living organism', 4)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the largest known living organism', 4, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('True or False Coca Cola was the first soft drink in space', 5)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False Coca Cola was the first soft drink in space', 5, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What is the measurement of speed in a computer mouse called', 6)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the measurement of speed in a computer mouse called', 6, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What is the meaning to life', 7)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the meaning to life', 7, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('How many second until one must throw the holy hand grenade', 8)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('How many second until one must throw the holy hand grenade', 8, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What is the common phrase associated with May 4th', 9)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the common phrase associated with May 4th', 9, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What are the 4 pillars of OO', 10)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What are the 4 pillars of OO', 10, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What word refers to the right hand but will only ever be typed with the left', 11)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What word refers to the right hand but will only ever be typed with the left', 11, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('True or False There are 11 planets in our solar system', 12)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False There are 11 planets in our solar system', 12, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What is the fear of the number 13', 13)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the fear of the number 13', 13, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('True or False The children of identical twins are genetically siblings, not cousins', 14)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False The children of identical twins are genetically siblings, not cousins', 14, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What is the offical bird of Redondo Beach, California', 15)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is the offical bird of Redondo Beach, California', 15, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What year was the War of 1812', 16)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What year was the War of 1812', 16, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('Who was King Henry VIIIs second wife', 17)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Who was King Henry VIIIs second wife', 17, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What can be blamed for most power outages in the US', 18)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What can be blamed for most power outages in the US', 18, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('Who owns all the swans in England', 19)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Who owns all the swans in England', 19, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('True or False You can only see a rainbow during the day', 20)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False You can only see a rainbow during the day', 20, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('How much money were the rights for The Terminator sold for', 21)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('How much money were the rights for The Terminator sold for', 21, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('Which Jamaican runner is an 11 time world champion and hold the record in the 100 and 200 meter race', 22)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Which Jamaican runner is an 11 time world champion and hold the record in the 100 and 200 meter race', 22, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('Which hockey team did Wayne Gretzky play for in the 80s', 23)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('Which hockey team did Wayne Gretzky play for in the 80s', 23, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('True or False HTTP stands for Hippo TRex Triangle and Penguin', 24)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False HTTP stands for Hippo TRex Triangle and Penguin', 24, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What is seen as the smallest unit of memory', 25)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What is seen as the smallest unit of memory', 25, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('How many bits in a byte', 26)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('How many bits in a byte', 26, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('True or False Venus is the hottest planet in our solar system', 27)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or False Venus is the hottest planet in our solar system', 27, 'TA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('The scientific term for \"brain freeze\"', 28)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('The scientific term for \"brain freeze\"', 28, 'MC')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('What letter does NOT make an appearance on the periodic table', 29)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('What letter does NOT make an appearance on the periodic table', 29, 'UA')";
 			stmt.executeUpdate(sqlQuestions);
 
-			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID)" + "VALUES " + "('True or Fasle a single strand of Spaghetti is called Spaghetto', 30)";
+			sqlQuestions = "INSERT INTO QUESTIONS (QUESTION, ID, QTYPE)" + "VALUES " + "('True or Fasle a single strand of Spaghetti is called Spaghetto', 30, 'TF')";
 			stmt.executeUpdate(sqlQuestions);
 			
 		} catch (SQLException e) {
@@ -193,46 +193,52 @@ public class SQLiteJDBC {
 
 			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 5, 11)";
 			stmt.executeUpdate(sqlAnswers);
-
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('Mickeys', 6, 12)";
+			
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 5, 12)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('42', 7, 13)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('Mickeys', 6, 13)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a 3 I mean 5', 8, 14)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('42', 7, 14)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b 5 I mean 3', 8, 15)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a 3 I mean 5', 8, 15)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a April showers bring May flowers', 9, 16)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b 5 I mean 3', 8, 16)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b Close only counts with horseshoes and hand grenades', 9, 17)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a April showers bring May flowers', 9, 17)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c Life is a beach and you are here dude', 9, 18)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b Close only counts with horseshoes and hand grenades', 9, 18)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('d May the 4th be with you', 9, 19)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c Life is a beach and you are here dude', 9, 19)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a Abstraction Inheritance Polymorphism Encapsulation', 10, 20)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('d May the 4th be with you', 9, 20)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b Coheasion Coupling Monlythic', 10, 21)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a Abstraction Inheritance Polymorphism Encapsulation', 10, 21)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c The cake is a lie', 10, 22)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b Coheasion Coupling Monlythic', 10, 22)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('d All of the above', 10, 23)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c The cake is a lie', 10, 23)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('Dexter', 11, 26)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('d All of the above', 10, 24)";
 			stmt.executeUpdate(sqlAnswers);
 
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('Dexter', 11, 25)";
+			stmt.executeUpdate(sqlAnswers);
+			
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 12, 26)";
+			stmt.executeUpdate(sqlAnswers);
+			
 			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 12, 27)";
 			stmt.executeUpdate(sqlAnswers);
 
@@ -253,84 +259,100 @@ public class SQLiteJDBC {
 
 			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 14, 33)";
 			stmt.executeUpdate(sqlAnswers);
-
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a Hummingbird', 15, 34)";
+			
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 14, 34)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b Alatros', 15, 35)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a Hummingbird', 15, 35)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c The Goodyear Blimb', 15, 36)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b Alatros', 15, 36)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('1812', 16, 37)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c The Goodyear Blimb', 15, 37)";
+			stmt.executeUpdate(sqlAnswers);
+
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('1812', 16, 38)";
 			stmt.executeUpdate(sqlAnswers);
 			
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('Anne Bolin', 17, 38)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('Anne Bolin', 17, 39)";
 			stmt.executeUpdate(sqlAnswers);
 			
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a cars', 18, 39)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a cars', 18, 40)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b snow', 18, 40)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b snow', 18, 41)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c wind', 18, 41)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c wind', 18, 42)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('d squirrels', 18, 42)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('d squirrels', 18, 43)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('The Queen', 19, 43)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('The Queen', 19, 44)";
+			stmt.executeUpdate(sqlAnswers);
+			
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 20, 45)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 20, 44)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 20, 46)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('$1', 21, 45)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('$1', 21, 47)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('Usain Bolt', 22, 46)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('Usain Bolt', 22, 48)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a Toronto Maple Leafs', 23, 47)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a Toronto Maple Leafs', 23, 49)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b Detroit Red Wings', 23, 48)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b Detroit Red Wings', 23, 50)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c Edmonton Oilers', 23, 49)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c Edmonton Oilers', 23, 51)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('d San Jose Sharks', 23, 50)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('d San Jose Sharks', 23, 52)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 24, 51)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 24, 53)";
+			stmt.executeUpdate(sqlAnswers);
+			
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 24, 54)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('kilobytes', 25, 52)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('kilobytes', 25, 55)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('8', 26, 53)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('8', 26, 56)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 27, 54)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 27, 57)";
+			stmt.executeUpdate(sqlAnswers);
+			
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 27, 58)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a sphenopalatine ganglioneuralgia', 28, 55)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('a sphenopalatine ganglioneuralgia', 28, 59)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b brain freeze', 28, 56)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('b brain freeze', 28, 60)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c cerebrum rigescunt indutae', 28, 57)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('c cerebrum rigescunt indutae', 28, 61)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('j', 29, 58)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('j', 29, 62)";
 			stmt.executeUpdate(sqlAnswers);
 
-			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 30, 59)";
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('True', 30, 63)";
 			stmt.executeUpdate(sqlAnswers);
+			
+			sqlAnswers = "INSERT INTO ANSWERS(ANSWER, questionID, answerID)" + "Values" + "('False', 30, 64)";
+			stmt.executeUpdate(sqlAnswers);
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -356,22 +378,22 @@ public class SQLiteJDBC {
 			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (5, 11)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (6, 12)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (6, 13)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (7, 13)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (7, 14)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (8, 15)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (8, 16)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (9, 19)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (9, 20)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (10, 20)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (10, 21)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (11, 26)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (11, 25)";
 			stmt.executeUpdate(sqlCorrect);
 
 			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (12, 27)";
@@ -386,49 +408,49 @@ public class SQLiteJDBC {
 			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (15, 36)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (16, 37)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (16, 38)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (17, 38)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (17, 39)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (18, 42)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (18, 43)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (19, 43)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (19, 44)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (20, 44)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (20, 46)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (21, 45)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (21, 47)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (22, 46)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (22, 48)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (23, 49)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (23, 51)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (24, 51)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (24, 54)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (25, 52)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (25, 55)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (26, 53)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (26, 56)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (27, 54)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (27, 57)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (28, 55)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (28, 59)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (29, 58)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (29, 62)";
 			stmt.executeUpdate(sqlCorrect);
 
-			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (30, 59)";
+			sqlCorrect = "INSERT INTO CORRECTANSWER(QuestionID, AnswerID)" + " Values (30, 63)";
 			stmt.executeUpdate(sqlCorrect);
 
 		} catch (SQLException e) {
@@ -446,10 +468,13 @@ public class SQLiteJDBC {
 		System.out.println("Please note that the numbers 1-"+ count + " are taken for table QUESTIONS");
 		System.out.println("Enter the new question: ");
 		question = kb.nextLine();
+		System.out.println("Enter the question type: ");
+		System.out.println("Multiple Choice: MC | User Answer: UA | True or False: TF");
+		String qtype = kb.nextLine();
 		
 		try {
 			
-			String addNew = "INSERT INTO QUESTIONS(QUESTION, ID)" + "VALES (" + question+ "," + (count + 1) +")";
+			String addNew = "INSERT INTO QUESTIONS(QUESTION, ID, QTYPE)" + "VALES (" + question+ "," + (count + 1) + qtype + ")";
 			stmt.executeUpdate(addNew);
 			count++;
 			System.out.println("Your question has been added to QUESTIONS");
@@ -461,13 +486,13 @@ public class SQLiteJDBC {
 	}
 	
 	// This method allows for user to add answers for their question
-	protected void addNewAnswers(int questionID) {
-		int count = 56;
+	protected void addNewAnswers() {
+		int count = 63;
 		String answers;
 		System.out.println("Please note the answers have 3 input parameters and numbers 1 -" + count + " are taken for ANSWERS");
 		
 		System.out.println("Enter the question number: ");
-		questionID = kb.nextInt();
+		int questionID = kb.nextInt();
 		
 		System.out.println("Enter the new answer(s): ");
 		answers = kb.nextLine();
@@ -511,24 +536,26 @@ public class SQLiteJDBC {
 		
 	}
 
-	protected int getQuestion() {
+	protected void getQuestion() {
 		
 		try {
-			Statement stmt1 = c.createStatement();
+			Statement stmt1 = conn.createStatement();
 			
 			
-			String query = "select QUESTION from QUESTIONS where ID = " + rand + ";";
+			String query = "select QUESTION , TYPE from QUESTIONS where ID = " + rand + ";";
 			
 			ResultSet resultSet = stmt1.executeQuery(query);
 			
 			
 			if(resultSet != null) {
 				String question = "";
-			
+				String type = "";
 				while(resultSet.next()) {
 				
 					question = resultSet.getString(1);
+					type = resultSet.getString(2);
 					System.out.println(question + "?");
+					System.out.println(type);
 			
 				}
 			
@@ -536,7 +563,7 @@ public class SQLiteJDBC {
 				resultSet.close();
 			
 	
-				return rand; // need the random number
+			//	return rand; // need the random number
 			}
 			} catch (SQLException e) {
 		
@@ -545,15 +572,15 @@ public class SQLiteJDBC {
 			catch(NullPointerException e) {
 				e.printStackTrace();
 			}
-		return 1;
+	//	return 1;
 	}
 	
 	protected void getAnswers() { 
 		try {
-			Statement stmt2 = c.createStatement();
+			Statement stmt2 = conn.createStatement();
 			
 //gets the question number that is returned by the question method
-			int questionID = getQuestion();
+			int questionID = rand;
 			
 			String query = "select ANSWER from ANSWERS where questionID = " + questionID;		
 			
@@ -578,12 +605,12 @@ public class SQLiteJDBC {
 
 	protected void getCorrect() {
 		
-		int questionID = getQuestion();
+		int questionID = rand;
 		
 		String query = "select ANSWER from ANSWERS where answerID = (select answerID from CORRECTANSWER where questionID = " + questionID + ")";		
 		
 		try {
-			Statement stmt3 = c.createStatement();
+			Statement stmt3 = conn.createStatement();
 			ResultSet resultSet = stmt3.executeQuery(query);
 			while(resultSet.next()) {
 				
