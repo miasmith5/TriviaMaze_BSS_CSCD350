@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class TokenCreator implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static Token createToken(int n) {
 		if(n == 4)
 			return new AddAChanceToken();

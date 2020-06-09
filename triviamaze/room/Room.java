@@ -7,10 +7,15 @@ import triviamaze.token.Token;
 import triviamaze.token.TokenCreator;
 
 public class Room implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String messageForTesting;
 	private Token token;
 	private char discoverSymbol;
 	private Object discoverable;
+	private boolean locked = false;
 
 	private char northDoor;
 	private char southDoor;
@@ -96,6 +101,34 @@ public class Room implements Serializable{
 
 	public char getDiscoverSymbol() {
 		return this.discoverSymbol;
+	}
+	
+	public void closeNorthDoor() {
+		this.northDoor = '*';
+		this.room[0][1] = this.northDoor;
+	}
+	
+	public void closeEastDoor() {
+		this.eastDoor = '*';
+		this.room[1][2] = this.eastDoor;
+	}
+	
+	public void closeSouthDoor() {
+		this.southDoor = '*';
+		this.room[2][1] = this.southDoor;
+	}
+	
+	public void closeWestDoor() {
+		this.westDoor = '*';
+		this.room[1][0] = this.westDoor;
+	}
+	
+	public boolean isLocked() {
+		return this.locked;
+	}
+	
+	public void lockRoom() {
+		this.locked = true;
 	}
 
 	public void setDiscoverable() {
