@@ -1,23 +1,29 @@
 package SaveState;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import triviamaze.maze.Maze;
+
 public class ResourceManager {
 	
 	public static void save(Serializable data, String fileName) throws Exception{
-		try(ObjectOutputStream outputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(fileName)))){
-			outputStream.writeObject(data);
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("fileName"));
+		
+		objectOutputStream.writeObject(data);
+		objectOutputStream.close();
 			
-		}
 	}
 	
-	public static Object load(String fileName) throws Exception{
-		try(ObjectInputStream inputStream = new ObjectInputStream(Files.newInputStream(Paths.get(fileName)))){
-			return inputStream.readObject();
-		}
-	}
+//	public static SaveData load(String fileName) throws Exception{
+//		ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName));
+//		maze = objectInputStream.readObject();
+//
+//
+//	}
 }
