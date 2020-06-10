@@ -1,12 +1,6 @@
 package triviamaze.game;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.sql.SQLException;
 import java.util.Scanner;
-import SaveState.ResourceManager;
 import SaveState.SaveData;
 import triviamaze.database.SQLiteJDBC;
 import triviamaze.maze.Maze;
@@ -14,58 +8,38 @@ import triviamaze.maze.Maze;
 public class TriviaMazeGame {
 	private static SaveData data = new SaveData();
 	private static Scanner kb = new Scanner(System.in);
+	private static Maze maze;
+	private static SQLiteJDBC sql;
 
 	public static void main(String[] args) {
-		Maze maze = new Maze();
-		SQLiteJDBC sql = SQLiteJDBC.getInstance();
-
-		System.out.println("Would you like to load your previous game?");
-		System.out.println("1. NO");
-		System.out.println("2. YES");
-		System.out.println("______");
-		System.out.print("-->");
-		String load = kb.next();
-
-		if (load.equals("2"))
-			maze = data.load();
 		
-		else
-			gameRules();
-
-//		sql.createTables();
-//		sql.addQuestions();
-//		sql.addAnswers();
-//		sql.addCorrectAnswers();
-
-		
+		menu();
 
 		do {
 			maze.getCurrentRoom().printRoom();
-			maze.traverseMaze();
+			maze.traverseMove(maze.traverseDirection());
 
-			if (maze.getCurrentRoom().getDiscoverSymbol() == 'Q') {
+			if (maze.getCurrentRoom().getDiscoverSymbol() == 'Q' && !maze.getQuit()) {
 				sql.getQuestion();
-				sql.getAnswers();
 
-				Object playerAnswer = playerChoice();
-				Object correctAnswer = sql.getCorrect();
+				String playerAnswer = playerChoice();
+				String correctAnswer = sql.getCorrect();
 				boolean correct = compareAnswers(playerAnswer, correctAnswer);
 
 				if (!correct) {
 					maze.lockCurrentRoom();
 					System.out.println("\nYou answered incorrectly. That room is now locked.");
 				}
-
 			}
 
 		} while (!maze.getQuit() && !maze.isEndGame() && !maze.isTrapped());
 
 		if (maze.isEndGame()) {
 			System.out.println("You have won!!!");
-			
-		}else if(maze.isTrapped()) {
+
+		} else if (maze.isTrapped()) {
 			System.out.println("You have been trapped. Try again.");
-			
+
 		} else {
 			System.out.println("Would you like to save your current game?");
 			System.out.println("1. NO");
@@ -77,29 +51,27 @@ public class TriviaMazeGame {
 
 			if (save.equals("2"))
 				data.save(maze);
-			
 		}
-
 	}// end main
 
-	// this records the player choice
-	private static Object playerChoice() {
+	private static String playerChoice() {
 
+		@SuppressWarnings("resource")
 		Scanner inAnswer = new Scanner(System.in);
-		Object playerAnswer = inAnswer.nextLine();
+		String playerAnswer = inAnswer.nextLine();
 
 		return playerAnswer;
-
 	}
 
-	private static boolean compareAnswers(Object playerAnswer, Object correctAnswer) {
+	private static boolean compareAnswers(String playerAnswer, String correctAnswer) {
 		boolean correct;
 
-		if (playerAnswer.equals(correctAnswer)) {
+		if (playerAnswer.equals(correctAnswer))
 			correct = true;
-		} else {
+			
+		 else 
 			correct = false;
-		}
+			
 		return correct;
 
 	}
@@ -116,6 +88,39 @@ public class TriviaMazeGame {
 
 	}
 	
-	
+	private static void menu() {
+		System.out.println("MENU");
+		System.out.println("____");
+		System.out.println("1. Start A New Game");
+		System.out.println("2. Load A Previous Game");
+		System.out.println("3. Add Questions To Game");
+		System.out.println("________________________");
+		System.out.println("--->");
+		String option = kb.next();
+
+		if (option.equals("1")) {
+			maze = new Maze();
+			sql = SQLiteJDBC.getInstance();
+			sql.dropTables();
+			sql.createTables();
+			sql.addQuestions();
+			sql.addAnswers();
+			sql.addCorrectAnswers();
+			sql = SQLiteJDBC.getInstance();
+			gameRules();
+		
+		}if (option.equals("2")) {
+			maze = data.load();
+			maze.resetQuit();
+			sql = SQLiteJDBC.getInstance();
+			
+		}if(option.equals("3")) {
+			sql = SQLiteJDBC.getInstance();
+			sql.addNewQuestion();
+			sql.addNewAnswers();			
+			maze = new Maze();
+
+		}
+	}
 
 }
