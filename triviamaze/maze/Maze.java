@@ -1,17 +1,13 @@
 package triviamaze.maze;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
-
 import triviamaze.room.Room;
-import triviamaze.token.Token;
 
-public class Maze implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Maze implements Serializable {
+	private static final long SERIALVERSIONUID = 1L;
 	private Room[][] maze;
 	private Room currentRoom;
 	private Room entrance;
@@ -19,10 +15,6 @@ public class Maze implements Serializable{
 	private int currentRowPosition;
 	private int currentColumnPosition;
 	private boolean quit = false;
-	
-	private int attempts = 3;
-	private ArrayList<String> inventoryOfTokens = new ArrayList<>();
-	private String usedToken = "";
 
 	public Maze() {
 		this.maze = new Room[7][7];
@@ -81,43 +73,52 @@ public class Maze implements Serializable{
 					this.maze[i][j].setEastDoor();
 			}
 		}
-
 	}
 
 	public Room getCurrentRoom() {
 		return this.currentRoom;
 	}
-	
+
 	public Room getNorthRoom() {
 		return this.maze[this.currentRowPosition - 1][this.currentColumnPosition];
 	}
-	
+
 	public Room getSouthRoom() {
 		return this.maze[this.currentRowPosition + 1][this.currentColumnPosition];
 	}
-	
+
 	public Room getEastRoom() {
 		return this.maze[this.currentRowPosition][this.currentColumnPosition + 1];
 	}
-	
+
 	public Room getWestRoom() {
 		return this.maze[this.currentRowPosition][this.currentColumnPosition - 1];
 	}
-	
+
 	public Room[][] getMaze() {
 		return this.maze;
 	}
 
-	//TODO
-	//Split this method into two
-	public void traverseMaze() {
+	public boolean isEndGame() {
+		return this.currentRoom == this.exit;
+	}
+
+	public boolean getQuit() {
+		return this.quit;
+	}
+
+	public void resetQuit() {
+		this.quit = false;
+	}
+
+	public String traverseDirection() {
+		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
 		String input = "";
-		
-		while (!input.equals("w") && !input.equals("d")
-				&& !input.equals("s") && !input.equals("a") 
-				&& !input.equals("q") && !input.equals("c")) {
-			
+
+		while (!input.equals("w") && !input.equals("d") && !input.equals("s") && !input.equals("a")
+				&& !input.equals("q") && !input.equals("c") & !input.equals("v")) {
+
 			System.out.println("Which Direction Do You Want To Travel?");
 			System.out.println("______________________________________");
 			System.out.println("W. North Door");
@@ -126,39 +127,110 @@ public class Maze implements Serializable{
 			System.out.println("A. West Door");
 			System.out.println("Q. QUIT");
 			System.out.print("--->");
-			
+
 			input = keyboard.next().toLowerCase();
-			
 		}
-		
-		
-		
-		if(input.equals("w") && this.currentRoom.hasNorthDoor()) {
+		return input;
+	}
+
+	public void traverseMove(String input) {
+
+		if (input.equals("w") && this.currentRoom.hasNorthDoor()) {
 			this.currentRowPosition -= 1;
 			this.currentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition];
-			
-		}else if(input.equals("d") && this.currentRoom.hasEastDoor()) {
+
+		} else if (input.equals("d") && this.currentRoom.hasEastDoor()) {
 			this.currentColumnPosition += 1;
 			this.currentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition];
-			
-		}else if(input.equals("s") && this.currentRoom.hasSouthDoor()) {
+
+		} else if (input.equals("s") && this.currentRoom.hasSouthDoor()) {
 			this.currentRowPosition += 1;
 			this.currentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition];
-			
-		}else if(input.equals("a") && this.currentRoom.hasWestDoor()) {
+
+		} else if (input.equals("a") && this.currentRoom.hasWestDoor()) {
 			this.currentColumnPosition -= 1;
 			this.currentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition];
-			
-		}else if(input.equals("q")) {
+
+		} else if (input.equals("q")) {
 			this.quit = true;
-			
-		}else if(input.equals("c")) {
+
+		} else if (input.equals("c")) {
 			this.printMaze();
+
+		} else if (input.equals("v")) {
+			Scanner readFile;
 			
-		}else {
+			try {
+				readFile = new Scanner(new File("database_questions.txt"));
+				while (readFile.hasNext()) {
+					System.out.println(readFile.nextLine());
+				}
+
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found" + e.getMessage());
+			}
+
+		} else {
 			System.out.println("\nYou cannot travel through a wall.");
 		}
-		
+	}
+
+	public boolean isTrapped() {
+
+		if (!this.currentRoom.hasNorthDoor() && !this.currentRoom.hasEastDoor() && !this.currentRoom.hasSouthDoor()
+				&& !this.currentRoom.hasWestDoor())
+			return true;
+
+		else
+			return false;
+	}
+
+	public void lockCurrentRoom() {
+		if (this.currentRoom.hasNorthDoor()) {
+			Room adjacentRoom = this.maze[this.currentRowPosition - 1][this.currentColumnPosition];
+			adjacentRoom.closeSouthDoor();
+			this.currentRoom.closeNorthDoor();
+		}
+
+		if (this.currentRoom.hasSouthDoor()) {
+			Room adjacentRoom = this.maze[this.currentRowPosition + 1][this.currentColumnPosition];
+			adjacentRoom.closeNorthDoor();
+			this.currentRoom.closeSouthDoor();
+		}
+
+		if (this.currentRoom.hasEastDoor()) {
+			Room adjacentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition + 1];
+			adjacentRoom.closeWestDoor();
+			this.currentRoom.closeEastDoor();
+		}
+
+		if (this.currentRoom.hasWestDoor()) {
+			Room adjacentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition - 1];
+			adjacentRoom.closeEastDoor();
+			this.currentRoom.closeWestDoor();
+		}
+
+		this.currentRoom.lockRoom();
+		this.moveToRoom();
+	}
+
+	public void moveToRoom() {
+
+		if (this.getNorthRoom() != null && !this.getNorthRoom().isLocked()) {
+			this.currentRoom = this.getNorthRoom();
+
+		} else if (this.getSouthRoom() != null && !this.getSouthRoom().isLocked()) {
+			this.currentRoom = this.getSouthRoom();
+
+		} else if (this.getEastRoom() != null && !this.getEastRoom().isLocked()) {
+			this.currentRoom = this.getEastRoom();
+
+		} else if (this.getWestRoom() != null && !this.getWestRoom().isLocked()) {
+			this.currentRoom = this.getWestRoom();
+
+		} else {
+			this.quit = true;
+		}
 	}
 
 	public void printCurrentRoom() {
@@ -173,148 +245,6 @@ public class Maze implements Serializable{
 				this.maze[i][j].printRoom();
 			}
 		}
+	}
 
-	}
-	
-	public void useToken(ArrayList<String> inventoryOfTokens, Scanner keyboard) {
-			if(inventoryOfTokens.size() == 0) {
-				System.out.println("You have no tokens to use!");
-				return;
-			}
-			
-			else {
-				System.out.println("Enter the symbol of the token to use it: ");
-				
-				for(int i = 0 ; i < inventoryOfTokens.size(); i ++) {
-					if(inventoryOfTokens.get(i).equals("A token to skip a question")) {
-						System.out.print(inventoryOfTokens.get(i) + " (S)\n");
-					}
-					
-					
-					else if(inventoryOfTokens.get(i).equals("A token for an extra chance")) {
-						System.out.print(inventoryOfTokens.get(i) + " (E) - Can only be used when you are out of attempts\n");
-					}
-				}		
-				
-			}
-			
-			keyboard.nextLine();
-			this.usedToken = keyboard.nextLine().toLowerCase();
-			
-			
-			if(this.usedToken.equals("s")) {
-				System.out.println("You used a token to skip a question!");
-				inventoryOfTokens.remove("A token to skip a question");
-			}
-				
-			else if(this.usedToken.equals("e")) {
-				System.out.println("You used a token for an extra chance!");
-				this.attempts++;
-				inventoryOfTokens.remove("A token for an extra chance");
-			}
-	}
-	
-	public boolean roomHasAQuestion() {
-		if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'Q') 
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean roomHasAToken() {
-		if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'S')
-			return true;
-		else if(this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'A')
-			return true;
-		else if (this.maze[currentRowPosition][currentColumnPosition].getDiscoverSymbol() == 'E')
-			return true;
-		
-		else return false;
-	}
-	
-	
-	public void addTokenToInventory() {
-		if(roomHasAToken()) {
-			System.out.println(((Token) this.maze[currentRowPosition][currentColumnPosition].getDiscoverable()).getDescription() + " added!");
-			inventoryOfTokens.add(((Token) this.maze[currentRowPosition][currentColumnPosition].getDiscoverable()).getDescription());
-		}
-	}
-	
-	public boolean isTrapped() {
-		
-		if(!this.currentRoom.hasNorthDoor() && !this.currentRoom.hasEastDoor() && !this.currentRoom.hasSouthDoor() && !this.currentRoom.hasWestDoor())
-			return true;
-		
-		else
-			return false;
-		
-	}
-	
-	public void lockCurrentRoom() {
-		if(this.currentRoom.hasNorthDoor()) {
-			Room adjacentRoom = this.maze[this.currentRowPosition - 1][this.currentColumnPosition];
-			adjacentRoom.closeSouthDoor();
-			this.currentRoom.closeNorthDoor();
-		}
-		
-		if(this.currentRoom.hasSouthDoor()) {
-			Room adjacentRoom = this.maze[this.currentRowPosition + 1][this.currentColumnPosition];
-			adjacentRoom.closeNorthDoor();
-			this.currentRoom.closeSouthDoor();
-		}
-		
-		if(this.currentRoom.hasEastDoor()) {
-			Room adjacentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition + 1];
-			adjacentRoom.closeWestDoor();
-			this.currentRoom.closeEastDoor();
-		}
-		
-		if(this.currentRoom.hasWestDoor()) {
-			Room adjacentRoom = this.maze[this.currentRowPosition][this.currentColumnPosition - 1];
-			adjacentRoom.closeEastDoor();
-			this.currentRoom.closeWestDoor();
-		}
-		
-		this.currentRoom.lockRoom();
-		this.moveToRoom();
-		
-	}
-	
-	public void moveToRoom() {
-		
-		if(this.getNorthRoom() != null && !this.getNorthRoom().isLocked()) {
-			this.currentRoom = this.getNorthRoom();
-			
-		}else if(this.getSouthRoom() != null && !this.getSouthRoom().isLocked()) {
-			this.currentRoom = this.getSouthRoom();
-			
-		}else if(this.getEastRoom() != null && !this.getEastRoom().isLocked()) {
-			this.currentRoom = this.getEastRoom();
-			
-		}else if(this.getWestRoom() != null && !this.getWestRoom().isLocked()) {
-			this.currentRoom = this.getWestRoom();
-			
-		}else {
-			this.quit = true;
-		}
-	}
-	
-	public boolean isEndGame() {
-		if(this.currentRoom == this.exit)
-			return true;
-		
-		else
-			return false;
-		
-	}
-	
-	public boolean getQuit() {
-		return this.quit;
-	}
-	
-	public void resetQuit() {
-		this.quit = false;
-	}
-	
-	
 }

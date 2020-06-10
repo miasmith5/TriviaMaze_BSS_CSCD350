@@ -44,6 +44,9 @@ public class MazeUnitTester {
 		assertEquals(false, room.hasWestDoor());
 	}
 	
+	@Test
+	public void userInputTest() {
+		assertEquals("w", this.maze.traverseDirection());
+	}
 	
-
 }
